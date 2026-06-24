@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABGB Burgers - Sistema de Gestión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- PANTALLA DE LOGIN -->
+        <div id="loginScreen" class="login-screen active">
+            <div class="login-container">
+                <div class="login-header">
+                    <div class="logo">
+                        <div class="logo-mark">AB</div>
+                    </div>
+                    <h1>ABGB BURGERS</h1>
+                    <p>Sistema de Gestión de Restaurante</p>
+                </div>
+
+                <div class="login-roles">
+                    <button class="role-card" data-role="mesero">
+                        <div class="role-icon mesero-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <circle cx="24" cy="14" r="6" fill="currentColor"/>
+                                <path d="M24 22C19.6 22 16 24.4 16 27.5V36C16 37.1 16.9 38 18 38H30C31.1 38 32 37.1 32 36V27.5C32 24.4 28.4 22 24 22Z" fill="currentColor"/>
+                            </svg>
+                        </div>
+                        <div class="role-info">
+                            <h3>Mesero</h3>
+                            <p>Gestionar mesas y pedidos</p>
+                        </div>
+                    </button>
+
+                    <button class="role-card" data-role="chef">
+                        <div class="role-icon chef-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <path d="M24 2C24 2 20 6 20 10C20 13.3 21.8 16 24 16C26.2 16 28 13.3 28 10C28 6 24 2 24 2Z" fill="currentColor"/>
+                                <path d="M16 20C14.9 20 14 20.9 14 22V42C14 43.1 14.9 44 16 44H32C33.1 44 34 43.1 34 42V22C34 20.9 33.1 20 32 20H16Z" fill="currentColor"/>
+                                <rect x="20" y="26" width="8" height="2" fill="#0a0a0a"/>
+                                <rect x="20" y="32" width="8" height="2" fill="#0a0a0a"/>
+                            </svg>
+                        </div>
+                        <div class="role-info">
+                            <h3>Chef</h3>
+                            <p>Preparar y calificar pedidos</p>
+                        </div>
+                    </button>
+
+                    <button class="role-card" data-role="admin">
+                        <div class="role-icon admin-icon">
+                            <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                                <circle cx="24" cy="24" r="3" fill="currentColor"/>
+                                <path d="M24 10C16.3 10 10 16.3 10 24C10 31.7 16.3 38 24 38C31.7 38 38 31.7 38 24C38 16.3 31.7 10 24 10ZM24 14C27.9 14 31 17.1 31 21C31 24.9 27.9 28 24 28C20.1 28 17 24.9 17 21C17 17.1 20.1 14 24 14Z" fill="currentColor"/>
+                                <circle cx="24" cy="24" r="18" fill="none" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                        </div>
+                        <div class="role-info">
+                            <h3>Administrador</h3>
+                            <p>Control total del sistema</p>
+                        </div>
+                    </button>
+                </div>
+
+                <div class="login-footer">
+                    <span class="status-indicator" id="statusIndicator">
+                        <span class="status-dot"></span>
+                        Conectado
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- HEADER PRINCIPAL -->
+        <header class="header" id="mainHeader" style="display: none;">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="logo-small">AB</div>
+                    <div class="header-info">
+                        <h2 id="roleTitle">MESERO</h2>
+                        <span id="timeDisplay">09:30</span>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <button class="btn-lang" data-lang="es">ES</button>
+                    <button class="btn-lang" data-lang="en">EN</button>
+                    <button class="btn-logout" id="btnLogout">Cerrar Sesión</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENEDOR PRINCIPAL -->
+        <main class="main-container" id="mainContainer" style="display: none;">
+            
+            <!-- VISTA MESERO -->
+            <div id="meseroView" class="view active">
+                <div class="mesero-layout">
+                    <!-- SECCIÓN IZQUIERDA: MENÚ Y BÚSQUEDA -->
+                    <section class="menu-section">
+                        <div class="section-header">
+                            <h2>Tomar Pedido</h2>
+                        </div>
+
+                        <div class="search-container">
+                            <input type="text" id="searchInput" placeholder="Buscar producto...">
+                            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                        </div>
+
+                        <div class="filter-tabs">
+                            <button class="filter-tab active" data-category="all">Todos</button>
+                            <button class="filter-tab" data-category="burgers">Angus</button>
+                            <button class="filter-tab" data-category="chicken">Pollo</button>
+                            <button class="filter-tab" data-category="combos">Smashed</button>
+                            <button class="filter-tab" data-category="sides">Acompañamientos</button>
+                            <button class="filter-tab" data-category="bebidas">Bebidas</button>
+                        </div>
+
+                        <div id="menuContainer" class="products-grid"></div>
+                    </section>
+
+                    <!-- SECCIÓN DERECHA: CARRITO Y MESAS -->
+                    <aside class="sidebar">
+                        <!-- SELECTOR DE MESAS -->
+                        <div class="sidebar-card">
+                            <div class="card-header">
+                                <h3>Seleccionar Mesa</h3>
+                            </div>
+                            <div class="tables-grid">
+                                <button class="table-btn" data-table="1">1</button>
+                                <button class="table-btn" data-table="2">2</button>
+                                <button class="table-btn" data-table="3">3</button>
+                                <button class="table-btn" data-table="4">4</button>
+                                <button class="table-btn" data-table="5">5</button>
+                                <button class="table-btn" data-table="6">6</button>
+                            </div>
+                        </div>
+
+                        <!-- CARRITO -->
+                        <div class="sidebar-card cart-card">
+                            <div class="card-header">
+                                <h3>Pedido Actual</h3>
+                                <span class="cart-mesa" id="selectedTableDisplay">-</span>
+                            </div>
+
+                            <div class="cart-items" id="cartItems">
+                                <div class="empty-state">Sin productos</div>
+                            </div>
+
+                            <div class="cart-summary">
+                                <div class="summary-row">
+                                    <span>Subtotal</span>
+                                    <span id="cartSubtotal">₡0</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Impuesto (13%)</span>
+                                    <span id="cartTax">₡0</span>
+                                </div>
+                                <div class="summary-row total">
+                                    <span>Total</span>
+                                    <span id="cartTotal">₡0</span>
+                                </div>
+                            </div>
+
+                            <button id="btnConfirmOrder" class="btn-confirm" disabled>
+                                Confirmar Pedido
+                            </button>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+
+            <!-- VISTA CHEF -->
+            <div id="chefView" class="view" style="display: none;">
+                <div class="chef-layout">
+                    <div class="section-header">
+                        <h2>Cocina - Panel de Control</h2>
+                    </div>
+
+                    <div class="kitchen-status-bar">
+                        <div class="status-box nuevo">
+                            <span class="status-count" id="countNuevo">0</span>
+                            <span class="status-label">Nuevos</span>
+                        </div>
+                        <div class="status-box preparando">
+                            <span class="status-count" id="countPreparando">0</span>
+                            <span class="status-label">Preparando</span>
+                        </div>
+                        <div class="status-box listo">
+                            <span class="status-count" id="countListo">0</span>
+                            <span class="status-label">Listos</span>
+                        </div>
+                    </div>
+
+                    <div class="orders-grid" id="kitchenOrders"></div>
+                </div>
+            </div>
+
+            <!-- VISTA ADMIN -->
+            <div id="adminView" class="view" style="display: none;">
+                <div class="admin-layout">
+                    <div class="section-header">
+                        <h2>Administración</h2>
+                    </div>
+
+                    <div class="admin-tabs-bar">
+                        <button class="admin-tab-btn active" data-tab="disponibilidad">Disponibilidad</button>
+                        <button class="admin-tab-btn" data-tab="historial">Historial</button>
+                        <button class="admin-tab-btn" data-tab="reportes">Reportes</button>
+                    </div>
+
+                    <!-- TAB: DISPONIBILIDAD -->
+                    <div id="disponibilidadTab" class="admin-tab active">
+                        <div class="products-availability" id="availabilityList"></div>
+                    </div>
+
+                    <!-- TAB: HISTORIAL -->
+                    <div id="historialTab" class="admin-tab" style="display: none;">
+                        <div class="historial-controls">
+                            <button class="btn-icon-text">Exportar</button>
+                            <button class="btn-icon-text danger">Limpiar</button>
+                        </div>
+                        <div class="historial-items" id="historialList"></div>
+                    </div>
+
+                    <!-- TAB: REPORTES -->
+                    <div id="reportesTab" class="admin-tab" style="display: none;">
+                        <div class="reportes-grid">
+                            <div class="report-card">
+                                <span class="report-label">Total de Pedidos</span>
+                                <span class="report-value" id="totalOrders">0</span>
+                            </div>
+                            <div class="report-card">
+                                <span class="report-label">Ingresos Totales</span>
+                                <span class="report-value" id="totalRevenue">₡0</span>
+                            </div>
+                            <div class="report-card">
+                                <span class="report-label">Ticket Promedio</span>
+                                <span class="report-value" id="avgTicket">₡0</span>
+                            </div>
+                            <div class="report-card">
+                                <span class="report-label">Top Producto</span>
+                                <span class="report-value" id="topProduct">-</span>
+                            </div>
+                        </div>
+                        <div class="top-products-list" id="topProductsList"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL CALIFICACIÓN -->
+    <div id="ratingModal" class="modal" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h2>Calificar Pedido</h2>
+                <button class="modal-close" id="closeRatingModal">×</button>
+            </div>
+            <div class="modal-body">
+                <p>¿Cómo estuvo el pedido?</p>
+                <div class="rating-stars" id="starsRating">
+                    <button class="rating-star" data-rating="1">★</button>
+                    <button class="rating-star" data-rating="2">★</button>
+                    <button class="rating-star" data-rating="3">★</button>
+                    <button class="rating-star" data-rating="4">★</button>
+                    <button class="rating-star" data-rating="5">★</button>
+                </div>
+                <textarea id="ratingComment" placeholder="Comentario (opcional)"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelRating">Cancelar</button>
+                <button class="btn-primary" id="submitRating">Enviar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+    <!-- MODAL INSTRUCCIONES ESPECIALES -->
+    <div id="instructionsModal" class="modal" style="display: none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h2>Instrucciones Especiales</h2>
+                <button class="modal-close" id="closeInstructionsModal">×</button>
+            </div>
+            <div class="modal-body">
+                <p id="instructionItemName" style="font-weight: 600; margin-bottom: 16px;"></p>
+                <div class="instructions-list" id="instructionsList"></div>
+                <div class="instructions-custom">
+                    <textarea id="customInstructions" placeholder="Agregar instrucciones personalizadas..."></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="cancelInstructions">Cancelar</button>
+                <button class="btn-primary" id="saveInstructions">Guardar</button>
+            </div>
+        </div>
+    </div>
